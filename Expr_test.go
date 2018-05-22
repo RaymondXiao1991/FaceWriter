@@ -4,7 +4,18 @@ import (
 	"fmt"
 	"math"
 	"testing"
+	"gopl.io/ch7/eval"
 )
+
+// An Expr is an arithmetic expression.
+type Expr interface {
+	// Eval returns the value of this Expr in the environment env.
+	Eval(env Env) float64
+	// Check reports errors in this Expr and adds its Vars to the set.
+	Check(vars map[Var]bool) error
+}
+
+//!+ast
 
 // A Var identifies a variable, e.g., x.
 type Var string
@@ -32,11 +43,6 @@ type call struct {
 
 type Env map[Var]float64
 
-type Expr interface {
-	// Eval returns the value of this Expr in the environment env.
-	Eval(env Env) float64
-}
-
 func (v Var) Eval(env Env) float64 {
 	return env[v]
 }
@@ -44,6 +50,10 @@ func (v Var) Eval(env Env) float64 {
 func (l literal) Eval(_ Env) float64 {
 	return float64(l)
 }
+
+//!-Eval1
+
+//!+Eval2
 
 func (u unary) Eval(env Env) float64 {
 	switch u.op {
@@ -84,15 +94,15 @@ func (c call) Eval(env Env) float64 {
 func TestEval(t *testing.T) {
 	tests := []struct {
 		expr string
-		env  Env
+		env  eval.Env
 		want string
 	}{
-		{"sqrt(A / pi)", Env{"A": 87616, "pi": math.Pi}, "167"},
-		{"pow(x,3) + pow(y,3)", Env{"x": 12, "y": 1}, "1729"},
-		{"pow(x,3) + pow(y,3)", Env{"x": 9, "y": 10}, "1729"},
-		{"5 / 9 * (F - 32)", Env{"F": -40}, "-40"},
-		{"5 / 9 * (F - 32)", Env{"F": 32}, "0"},
-		{"5 / 9 * (F - 32)", Env{"F": 212}, "100"},
+		{"sqrt(A / pi)", eval.Env{"A": 87616, "pi": math.Pi}, "167"},
+		{"pow(x,3) + pow(y,3)", eval.Env{"x": 12, "y": 1}, "1729"},
+		{"pow(x,3) + pow(y,3)", eval.Env{"x": 9, "y": 10}, "1729"},
+		{"5 / 9 * (F - 32)", eval.Env{"F": -40}, "-40"},
+		{"5 / 9 * (F - 32)", eval.Env{"F": 32}, "0"},
+		{"5 / 9 * (F - 32)", eval.Env{"F": 212}, "100"},
 	}
 	var prevExpr string
 	for _, test := range tests {
@@ -100,7 +110,7 @@ func TestEval(t *testing.T) {
 			fmt.Printf("\n%s\n", test.expr)
 			prevExpr = test.expr
 		}
-		expr, err := Parse(test.expr)
+		expr, err := eval.Parse(test.expr)
 		if err != nil {
 			t.Error(err)
 			continue
