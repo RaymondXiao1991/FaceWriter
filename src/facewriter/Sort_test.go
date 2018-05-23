@@ -1,4 +1,4 @@
-package FaceWriter
+package facewriter
 
 import (
 	"testing"

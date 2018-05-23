@@ -1,12 +1,11 @@
-package main
+package plot
 
 import (
 	"net/http"
 	"math"
-	"gopl.io/ch7/eval"
 	"fmt"
 	"io"
-	"log"
+	"gopl.io/ch7/eval"
 )
 
 const (
@@ -68,7 +67,7 @@ func parseAndCheck(s string) (eval.Expr, error) {
 	return expr, nil
 }
 
-func plot(w http.ResponseWriter, r *http.Request) {
+func Plot(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	expr, err := parseAndCheck(r.Form.Get("expr"))
 	if err != nil {
@@ -80,13 +79,4 @@ func plot(w http.ResponseWriter, r *http.Request) {
 		r := math.Hypot(x, y) // distance from (0,0)
 		return expr.Eval(eval.Env{"x": x, "y": y, "r": r})
 	})
-}
-
-func main() {
-	http.HandleFunc("/plot", plot)
-	log.Fatal(http.ListenAndServe("localhost:8000", nil))
-
-	// http://localhost:8000/plot?expr=sin(-x)*pow(1.5,-r)
-	// http://localhost:8000/plot?expr=pow(2,sin(y))*pow(2,sin(x))/16
-	// http://localhost:8000/plot?expr=sin(x*y/10)/20
 }
