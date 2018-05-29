@@ -1,5 +1,7 @@
 package tree
 
+import "fmt"
+
 type DataType interface{}
 
 // BinTreeNode
@@ -53,7 +55,7 @@ func (btn *BinTreeNode) CutOffParent() {
 	if !btn.HasParent() {
 		return
 	}
-	if btn.IsChild() {
+	if btn.IsLeaf() {
 		if btn.IsLChildOf(btn) {
 			btn.parent.lChild = nil
 		} else if btn.IsRChildOf(btn) {
@@ -109,9 +111,9 @@ func (btn *BinTreeNode) SetRChild(rc *BinTreeNode) *BinTreeNode {
 	return rc
 }
 
-// 判断是否为叶子节点
-func (btn *BinTreeNode) IsChild() bool {
-	return btn.parent != nil
+// IsLeaf 判断是否为叶子节点
+func (btn *BinTreeNode) IsLeaf() bool {
+	return !btn.HasLChild() && !btn.HasRChild()
 }
 
 // IsLChildOf 判断是否为某结点的左孩子
@@ -160,4 +162,20 @@ func (btn *BinTreeNode) SetSize() {
 	if btn.HasParent() {
 		btn.parent.SetSize()
 	}
+}
+
+// String 打印一棵二叉树
+func (btn *BinTreeNode) String() string {
+	if btn == nil {
+		return "()"
+	}
+	s := ""
+	if btn.GetLChild() != nil {
+		s += btn.GetLChild().String() + " "
+	}
+	s += fmt.Sprint(btn.GetData())
+	if btn.GetRChild() != nil {
+		s += " " + btn.GetRChild().String()
+	}
+	return "(" + s + ")"
 }

@@ -1,6 +1,8 @@
 package tree
 
-import "container/list"
+import (
+	"container/list"
+)
 
 // BinTree 二叉树
 type BinTree struct {
@@ -15,7 +17,7 @@ func NewBinTree(root *BinTreeNode) *BinTree {
 }
 
 // GetSize 获得二叉树总节点数
-func (btn *BinTree) GetSize() int {
+func (bt *BinTree) GetSize() int {
 	return bt.size
 }
 
@@ -60,12 +62,82 @@ func isEqual(bt *BinTreeNode, e DataType) *BinTreeNode {
 	return nil
 }
 
-// 先序遍历, 并保存在链表里
-
-func preOrder(btn *BinTreeNode, l *list.List) {
-
+// PreOrder 先序遍历(“根结点-左孩子-右孩子”), 并保存在链表里
+func (bt *BinTree) PreOrder() *list.List {
+	l := list.New()
+	preOrder(bt.root, l)
+	return l
 }
 
-// 中序遍历, 并保存在链表里
+func preOrder(btn *BinTreeNode, l *list.List) {
+	if btn == nil {
+		return
+	}
+	l.PushBack(btn)
+	preOrder(btn.GetLChild(), l)
+	preOrder(btn.GetRChild(), l)
+}
 
-// 后序遍历, 并保存在链表里
+// InOrder 中序遍历(“左孩子-根结点-右孩子”), 并保存在链表里
+func (bt *BinTree) InOrder() *list.List {
+	l := list.New()
+	inOrder(bt.root, l)
+	return l
+}
+
+func inOrder(btn *BinTreeNode, l *list.List) {
+	if btn == nil {
+		return
+	}
+	preOrder(btn.GetLChild(), l)
+	l.PushBack(btn)
+	preOrder(btn.GetRChild(), l)
+}
+
+// PostOrder 后序遍历(“左孩子-右孩子-根结点”), 并保存在链表里
+func (bt *BinTree) PostOrder() *list.List {
+	l := list.New()
+	postOrder(bt.root, l)
+	return l
+}
+
+func postOrder(btn *BinTreeNode, l *list.List) {
+	if btn == nil {
+		return
+	}
+	postOrder(btn.GetLChild(), l)
+	postOrder(btn.GetRChild(), l)
+	l.PushBack(btn)
+}
+
+// Walk 步进 tree bt 将所有的值从 tree 发送到 channel ch。
+func Walk(bt *BinTree, ch chan DataType) {
+	rangeTree(bt.root, ch)
+	close(ch)
+}
+
+//遍历二叉树，把当前节点值传入通道
+func rangeTree(btn *BinTreeNode, ch chan DataType) {
+	if btn != nil {
+		rangeTree(btn.GetLChild(), ch)
+		ch <- btn.GetData()
+		rangeTree(btn.GetRChild(), ch)
+	}
+}
+
+// Same 检测树 t1 和 t2 是否含有相同的值。
+func Same(t1, t2 *BinTree) bool {
+	//建立两个通道
+	ch1 := make(chan DataType)
+	ch2 := make(chan DataType)
+	//遍历两个二叉树，把值传入各自的通道
+	go Walk(t1, ch1)
+	go Walk(t2, ch2)
+	//遍历通道进行比较，有不同的值就返回false
+	for i := range ch1 {
+		if i != <-ch2 {
+			return false
+		}
+	}
+	return true
+}
