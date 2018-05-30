@@ -116,7 +116,7 @@ func Walk(bt *BinTree, ch chan DataType) {
 	close(ch)
 }
 
-//遍历二叉树，把当前节点值传入通道
+// rangeTree 遍历二叉树，把当前节点值传入通道
 func rangeTree(btn *BinTreeNode, ch chan DataType) {
 	if btn != nil {
 		rangeTree(btn.GetLChild(), ch)
