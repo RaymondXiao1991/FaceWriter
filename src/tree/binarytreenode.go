@@ -179,3 +179,12 @@ func (btn *BinTreeNode) String() string {
 	}
 	return "(" + s + ")"
 }
+
+type Tree interface {
+	Put(k, v int)  //新增或修改
+	Get(k int) int //查询
+	Delete(k int)  //删除
+	Size() int     //树的大小
+	Min() int      //最小键
+	DeleteMin()    //删除最小键
+}
