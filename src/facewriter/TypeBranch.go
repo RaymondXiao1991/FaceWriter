@@ -14,8 +14,9 @@ func sqlQuote(x interface{}) string {
 		}
 		return "FALSE"
 	case string:
-		return sqlQuoteString(x) // (not shown)
+		//return sqlQuoteString(x) // (not shown)
 	default:
 		panic(fmt.Sprintf("unexpected type %T: %v", x, x))
 	}
+	return "FALSE"
 }

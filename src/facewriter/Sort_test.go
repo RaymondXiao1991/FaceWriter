@@ -7,6 +7,7 @@ import (
 	"text/tabwriter"
 	"os"
 	"fmt"
+	"reflect"
 )
 
 type StringSlice []string
@@ -28,7 +29,8 @@ func TestSlice(t *testing.T) {
 	}
 }
 
-func StringSliceEqual(a, b []string) bool {
+func StringSliceEqual(a, b []interface{}) bool {
+	voa := reflect.ValueOf(a)
 	if len(a) != len(b) {
 		return false
 	}

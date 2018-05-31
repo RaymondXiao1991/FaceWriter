@@ -20,9 +20,19 @@ func TestPush(t *testing.T) {
 		p = p.next
 	}
 	fmt.Println()
+}
+
+func TestPop(t *testing.T) {
+	q := NewQueue()
+	q.Push(77)
+	q.Push(79)
+	q.Push(11)
+	q.Push(12)
+	q.Push(321)
+	q.Push(1)
 
 	q.Pop()
-	p = q.head
+	p := q.head
 	for p != nil {
 		fmt.Printf("%v ", p.data)
 		p = p.next

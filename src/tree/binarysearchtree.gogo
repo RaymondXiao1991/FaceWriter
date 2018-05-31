@@ -3,7 +3,9 @@ package tree
 // 二叉查找树的特点：对于每一个节点X,左子树中所有项的值小于X中的值，而它的右子树种所有项的值大于X中的值。
 
 type BinarySearchTree struct {
-	BinTree
+	root   *binSearchTreeNode // 根节点
+	height int                // 树高
+	size   int                // 节点数
 }
 
 // 节点
@@ -13,8 +15,8 @@ type binSearchTreeNode struct {
 }
 
 // NewBinSearchTreeNode 新建节点
-func NewBinSearchTreeNode(d DataType) *binSearchTreeNode {
-	bstn := &binSearchTreeNode{key: 0}
+func NewBinSearchTreeNode(k int, d DataType) *binSearchTreeNode {
+	bstn := &binSearchTreeNode{key: k}
 	bstn.SetData(d)
 	bstn.SetSize()
 
@@ -23,7 +25,7 @@ func NewBinSearchTreeNode(d DataType) *binSearchTreeNode {
 
 // 初始化并添加根节点的值
 func NewBinarySearchTree(root DataType) *BinarySearchTree {
-	return &BinarySearchTree{data: root}
+	return &BinarySearchTree{root: root}
 }
 
 /*type Tree interface {
@@ -45,7 +47,7 @@ func (bst *BinarySearchTree) Put(k int, v DataType) {
 //如果只是修改，第二个参数返回false
 func put(btn *binSearchTreeNode, k, v int) (*binSearchTreeNode, bool) {
 	if btn == nil {
-		return newNode(k, v), true
+		return NewBinSearchTreeNode(k, v), true
 	}
 	hasNew := false //检测是否创建了新节点
 	if k < btn.k {

@@ -1,11 +1,11 @@
 package facewriter
 
 import (
-	"fmt"
 	"time"
 	"sync"
-	"sync/atomic"
 	"testing"
+	"fmt"
+	"sync/atomic"
 )
 
 /*

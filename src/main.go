@@ -1,9 +1,5 @@
 package main
 
-import (
-	"channel"
-)
-
 func main() {
 	// http://localhost:8000/plot?expr=sin(-x)*pow(1.5,-r)
 	// http://localhost:8000/plot?expr=pow(2,sin(y))*pow(2,sin(x))/16
@@ -51,11 +47,11 @@ func main() {
 	}
 	*/
 
-	naturals := make(chan int)
+	/*naturals := make(chan int)
 	squares := make(chan int)
 	go channel.Counter(naturals)
 	go channel.Squarer(squares, naturals)
-	channel.Printer(squares)
+	channel.Printer(squares)*/
 
 	//http.ListenAndServe("localhost:8002", nil)
 }
