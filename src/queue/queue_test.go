@@ -3,6 +3,7 @@ package queue
 import (
 	"testing"
 	"fmt"
+	"time"
 )
 
 func TestPush(t *testing.T) {
@@ -46,4 +47,15 @@ func TestPop(t *testing.T) {
 		p = p.next
 	}
 	fmt.Println()
+}
+
+func TestTimeBefore(t *testing.T) {
+	y, m, d := time.Now().Date()
+	day := time.Date(y, m, d, 0, 0, 0, 0, time.Local)
+	flag := day.Before(time.Unix(1527782400, 0))
+	if !flag {
+		t.Log("test case passed")
+	} else {
+		t.Log("test case failed")
+	}
 }

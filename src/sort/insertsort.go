@@ -11,8 +11,7 @@ func DirectInsertSort(l []int64) {
 			// 将大于temp的往后移动一位
 			if l[j] > temp {
 				l[j+1] = l[j]
-			} else
-			{
+			} else {
 				break
 			}
 		}
@@ -44,4 +43,10 @@ func BinaryInsertSort(l []int64) {
 		// 将当前插入数字挪入它该待的坑位
 		l[left] = temp
 	}
+}
+
+// ShellSort 希尔排序
+// 基本思想：先取一个小于n的整数d1作为第一个增量，把文件的全部记录分成d1个组。所有距离为d1的倍数的记录放在同一个组中。先在各组内进行直接插入排序；然后，取第二个增量d2
+func ShellSort(l []int64) {
+	
 }
