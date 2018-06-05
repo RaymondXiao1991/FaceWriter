@@ -1,4 +1,4 @@
-package sort
+package sorts
 
 // MergeSort 归并排序
 /*

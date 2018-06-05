@@ -1,4 +1,4 @@
-package sort
+package sorts
 
 // DirectInsertSort 直接插入排序
 // 从后向前找到合适位置后插入
@@ -48,5 +48,19 @@ func BinaryInsertSort(l []int64) {
 // ShellSort 希尔排序
 // 基本思想：先取一个小于n的整数d1作为第一个增量，把文件的全部记录分成d1个组。所有距离为d1的倍数的记录放在同一个组中。先在各组内进行直接插入排序；然后，取第二个增量d2
 func ShellSort(l []int64) {
-	
+	/*length := len(l)
+	tmp, gap := 0, 1
+	for gap < length/3 {
+		gap = gap*3 + 1
+	}
+
+	for gap; gap > 0; gap = math.Floor(float64(gap / 3)) {
+		for i := gap; i < length; i++ {
+			tmp = l[i]
+			for j := i - gap; j > 0 && l[j] > tmp; j -= gap {
+				l[j+gap] = l[j]
+			}
+			l[j+gap] = tmp
+		}
+	}*/
 }

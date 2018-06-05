@@ -23,3 +23,23 @@ func SliceEqual(a, b interface{}) bool {
 	}
 	return true
 }
+
+type BySortIndex []int64
+
+func (b BySortIndex) Len() int { return len(b) }
+
+func (b BySortIndex) Swap(i, j int) { b[i], b[j] = b[j], b[i] }
+
+func (b BySortIndex) Less(i, j int) bool {
+	return b[i] < b[j]
+}
+
+type Interface interface {
+	// Len is the number of elements in the collection.
+	Len() int
+	// Less reports whether the element with
+	// index i should sort before the element with index j.
+	Less(i, j int) bool
+	// Swap swaps the elements with indexes i and j.
+	Swap(i, j int)
+}

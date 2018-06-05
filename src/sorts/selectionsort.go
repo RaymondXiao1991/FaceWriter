@@ -1,4 +1,4 @@
-package sort
+package sorts
 
 // SelectionSort 选择排序
 /*

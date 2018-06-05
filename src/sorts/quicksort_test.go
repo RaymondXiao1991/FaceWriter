@@ -1,11 +1,11 @@
-package sort
+package sorts
 
 import (
 	"testing"
 	"common"
 )
 
-/*func TestQuickSort(t *testing.T) {
+func TestQuickSort(t *testing.T) {
 	l := []int64{49, 38, 65, 97, 76, 13, 27, 49, 78, 34, 12, 64, 1}
 	t.Log(l)
 
@@ -16,9 +16,9 @@ import (
 	if common.SliceEqual(l, tl) {
 		t.Log("test case passed")
 	} else {
-		t.Log("test case failed")
+		t.Error("test case failed")
 	}
-}*/
+}
 
 func TestQuickSort2(t *testing.T) {
 	l := []int64{49, 38, 65, 97, 76, 13, 27, 49, 78, 34, 12, 64, 1}
@@ -31,6 +31,6 @@ func TestQuickSort2(t *testing.T) {
 	if common.SliceEqual(l, tl) {
 		t.Log("test case passed")
 	} else {
-		t.Log("test case failed")
+		t.Error("test case failed")
 	}
 }

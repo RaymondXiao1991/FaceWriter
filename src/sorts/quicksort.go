@@ -1,4 +1,4 @@
-package sort
+package sorts
 
 import "fmt"
 
@@ -11,6 +11,7 @@ import "fmt"
 func QuickSort(l []int64, left, right int) {
 	if left < right {
 		p := partition(l, left, right)
+		// fmt.Println(p)
 		QuickSort(l, left, p-1)
 		QuickSort(l, p+1, right)
 	}
@@ -18,16 +19,27 @@ func QuickSort(l []int64, left, right int) {
 
 // 数组分区，左小右大
 func partition(l []int64, left, right int) int {
-	pivot := left // 设定基准值（pivot）
-	storeIndex := pivot + 1
-	for i := storeIndex; i <= right; i++ {
-		if l[i] < l[pivot] {
-			l[storeIndex], l[i] = l[i], l[storeIndex] // 交换位置
-			storeIndex++
+	pivot := l[left] // 设定基准值（pivot）
+	tLeft, tRight := left, right
+	for {
+		// 查找小于等于pivot的元素，该元素的位置一定是tLeft到right之间，因为l[tLeft]及左边元素小于等于pivot，不会越界
+		for l[tRight] > pivot {
+			tRight--
 		}
+		// 找到大于pivot的元素，该元素的位置一定是left到tRight+1之间。因为l[tRight+1]必定大于pivot
+		for l[tLeft] <= pivot && tLeft < tRight {
+			tLeft++
+		}
+
+		if tLeft >= tRight {
+			break
+		}
+
+		l[tLeft], l[tRight] = l[tRight], l[tLeft]
+		fmt.Println(l)
 	}
-	l[pivot], l[ storeIndex-1] = l[ storeIndex-1], l[pivot] // 将基准元素放置到最后的正确位置上
-	return storeIndex - 1
+	l[tLeft], l[left] = l[left], l[tLeft]
+	return tLeft
 }
 
 func QuickSort2(l []int64) {

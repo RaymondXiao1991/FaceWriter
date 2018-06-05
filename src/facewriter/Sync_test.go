@@ -67,8 +67,8 @@ func TestSync(t *testing.T) {
 	wg.Wait()
 
 	if success == 100 {
-		t.Log("test case passed")
+		t.Log("Test case passed")
 	} else {
-		t.Log("test case failed")
+		t.Error("Test case failed, Got ", success, "Expected 100")
 	}
 }

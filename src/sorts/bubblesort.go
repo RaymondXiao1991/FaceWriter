@@ -1,4 +1,4 @@
-package sort
+package sorts
 
 // BubbleSort 冒泡排序
 /*

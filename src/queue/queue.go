@@ -12,7 +12,7 @@ type node struct {
 //type Queue []*Node
 type Queue struct {
 	head  *node // 队头允许删除
-	tail  *node // 队尾允许插入
+	tail  *node // 队尾允许 插入
 	count int
 }
 

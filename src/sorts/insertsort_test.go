@@ -1,4 +1,4 @@
-package sort
+package sorts
 
 import (
 	"testing"
@@ -16,7 +16,7 @@ func TestDirectInsertSort(t *testing.T) {
 	if common.SliceEqual(l, tl) {
 		t.Log("test case passed")
 	} else {
-		t.Log("test case failed")
+		t.Error("test case failed")
 	}
 }
 
@@ -31,6 +31,6 @@ func TestBinaryInsertSort(t *testing.T) {
 	if common.SliceEqual(l, tl) {
 		t.Log("test case passed")
 	} else {
-		t.Log("test case failed")
+		t.Error("test case failed")
 	}
 }
