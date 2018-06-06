@@ -39,11 +39,11 @@ func CountingSort(l []int64, length int) {
 		tmpArr[k] += tmpArr[k-1]
 	}
 
-	//将计数排序结果转化为数组元素的真实排序结果
+	// 将计数排序结果转化为数组元素的真实排序结果
 	for j := n - 1; j >= 0; j-- {
-		elem := l[j]           //取待排序元素
-		index := tmpArr[elem] - 1; //待排序元素在有序数组中的序号
-		sorted_arr[index] = elem;    //将待排序元素存入结果数组中
-		count_arr[elem]--;           //修正排序结果，其实是针对算得元素的修正
+		elem := l[j]              //取待排序元素
+		index := tmpArr[elem] - 1 //待排序元素在有序数组中的序号
+		sorted_arr[index] = elem  //将待排序元素存入结果数组中
+		count_arr[elem]--         //修正排序结果，其实是针对算得元素的修正
 	}
 }

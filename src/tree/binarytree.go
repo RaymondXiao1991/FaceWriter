@@ -89,9 +89,9 @@ func inOrder(btn *BinTreeNode, l *list.List) {
 	if btn == nil {
 		return
 	}
-	preOrder(btn.GetLChild(), l)
+	inOrder(btn.GetLChild(), l)
 	l.PushBack(btn)
-	preOrder(btn.GetRChild(), l)
+	inOrder(btn.GetRChild(), l)
 }
 
 // PostOrder 后序遍历(“左孩子-右孩子-根结点”), 并保存在链表里

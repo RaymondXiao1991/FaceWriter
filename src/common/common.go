@@ -43,3 +43,10 @@ type Interface interface {
 	// Swap swaps the elements with indexes i and j.
 	Swap(i, j int)
 }
+
+func If(condition bool, trueVal, falseVal interface{}) interface{} {
+	if condition {
+		return trueVal
+	}
+	return falseVal
+}
