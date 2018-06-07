@@ -56,7 +56,7 @@ func GreedyCutRopeByRecursive(length int) int { // 递归法
   注意在背包问题中，可以将某种物品的一部分装入背包中，但是不可以重复装入。
  */
 // 选择单位重量价值最大的物品
-func GreedyKnapSack(weight, value []int, c int) float64 {
+func GreedyKnapSack(weight, value []int, n, c int) float64 {
 	// 假设物品已按单位重量降序排列
 	var (
 		i        int
@@ -68,26 +68,47 @@ func GreedyKnapSack(weight, value []int, c int) float64 {
 		maxValue += float64(value[i]) // 总价值累加
 		c -= weight[i]                // 背包剩余数量
 	}
-	fmt.Println(c, weight[i])
-	x[i] = float64(c / weight[i]) // 物品i装入一部分
+	if i <= n {
+		fmt.Println(c, weight[i])
+		x[i] = float64(c / weight[i]) // 物品i装入一部分
+	}
 	fmt.Println("x[i]", x[i])
 	fmt.Println("value[i]", value[i])
 	maxValue += x[i] * float64(value[i])
 	return maxValue
+}
 
-	/*for (i=1;i<=n;i++)//物品整件被装下,x[i]=1
-	{
-	if (w[i]>c)
-	{
-	break;
+/*
+  案例三:
+  假设有一个需要使某一资源的n个活动组成的集合S={a1，a2，a3...an}。
+  该资源一次只能被一个活动占用，每个活动ai有一个开始时间Si和结束时间Fi，且0<=Si<Fi<∞。
+  一旦被选择后，活动ai就占据半开时间区间[Si,Fi)。
+  如果区间[Si，Fi)与 [Sj，Fj)互不重叠，称活动ai与aj是兼容的。
+  活动选择问题就是要选择出一个由互相兼容的问题组成的最大集合。
+　讨论下面的活动集合S，其中各活动已按结束时间的单调递增顺序进行了排序：
+  ----------------------------------------------------------------------------------------------
+  i  |   1   |   2   |   3   |   4   |   5   |   6   |   7    |   8   |   9   |   10   |   11  |
+  Si |   1   |   3   |   0   |   5   |   3   |   5   |   6    |   8   |   8   |   2    |   12  |
+  Fi |   4   |   5   |   6   |   7   |   8   |   9   |   10   |   11  |   12  |   13   |   14  |
+  ----------------------------------------------------------------------------------------------
+ */
+//　　对于任意非空子问题Sij，设am是Sij中具有最早结束时间的活动：
+//　　　　fm=min{fk:ak∈Sij}
+//　　那么：
+//1.活动am在Sij的某最大兼容活动子集中被使用。
+//2.子问题Sim为空，所以选择am使子问题Smj为唯一可能非空的子问题
+//　　在解决子问题时，选择am是一个可被合法调度、具有最早结束时间的活动。从直觉上来看，这种活动选择方法是一种贪婪技术，他给后面剩下的待调度任务留下了尽可能多的机会。也就是说，此处的贪心选择使得剩下的、未调度的时间最大化。
+func GreedyActivitySelector(s, f []int) (b []bool) {
+	n := len(s) - 1
+	b[1] = true
+	j := 1
+	for i := 2; i <= n; i++ {
+		if s[i] > f[j] {
+			b[i] = true
+			j = i
+		} else {
+			b[i] = false
+		}
 	}
-	x[i]=1;
-	c-=w[i];
-	}
-
-	//物品i只有部分被装下
-	if (i<=n)
-	{
-		x[i]=c/w[i];
-	}*/
+	return b
 }
