@@ -1,6 +1,8 @@
 package common
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestSliceEqual(t *testing.T) {
 	s1 := []string{"1", "2"}
@@ -19,5 +21,14 @@ func TestSliceEqual(t *testing.T) {
 		t.Log("test case2 passed")
 	} else {
 		t.Error("Test case2 failed, Got ", SliceEqual(s3, s4), "Expected true")
+	}
+}
+
+func TestGenerator(t *testing.T) {
+	for i := range Generator() {
+		if i == 5 {
+			break
+		}
+		t.Log(i)
 	}
 }

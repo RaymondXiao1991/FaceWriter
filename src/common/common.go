@@ -1,6 +1,8 @@
 package common
 
-import "reflect"
+import (
+	"reflect"
+)
 
 func SliceEqual(a, b interface{}) bool {
 	voa, vob := reflect.ValueOf(a), reflect.ValueOf(b)
@@ -49,4 +51,23 @@ func If(condition bool, trueVal, falseVal interface{}) interface{} {
 		return trueVal
 	}
 	return falseVal
+}
+
+// 实现类似python的迭代器
+func Generator() chan int {
+	c := make(chan int)
+	n := 0
+	go func() {
+		for {
+			c <- n
+			n = n + 1
+		}
+	}()
+
+	return c
+}
+
+func Abs(n int64) int64 {
+	y := n >> 63
+	return (n ^ y) - y
 }
