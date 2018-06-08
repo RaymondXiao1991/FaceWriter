@@ -1,4 +1,4 @@
-package facewriter
+package face_writer
 
 import (
 	"time"
