@@ -71,3 +71,12 @@ func Abs(n int64) int64 {
 	y := n >> 63
 	return (n ^ y) - y
 }
+
+// Reverse 反转字符串
+func Reverse(s string) string {
+	runes := []rune(s)
+	for from, to := 0, len(runes)-1; from < to; from, to = from+1, to-1 {
+		runes[from], runes[to] = runes[to], runes[from]
+	}
+	return string(runes)
+}

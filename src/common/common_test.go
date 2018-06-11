@@ -32,3 +32,8 @@ func TestGenerator(t *testing.T) {
 		t.Log(i)
 	}
 }
+
+func TestReverse(t *testing.T) {
+	s := Reverse("cdfeaj")
+	t.Log(s)
+}
