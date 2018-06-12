@@ -1,7 +1,5 @@
 package longest_increasing_subsequence
 
-import "fmt"
-
 /*
   实例一：最长递增子序列（Longest Increasing Subsequence）。
   问题描述。给定长度为N的数组A，计算A的最长单调递增的子序列（不一定连续）。如给定数组A{5，6，7，1，2，8}，则A的LIS为{5，6，7，8}，长度为4.
@@ -69,7 +67,7 @@ type Channel struct {
 
 // 如果不仅是求LIS的长度，而要求LIS本身呢？我们可以通过记录前驱的方式，从该位置找到其前驱，进而找到前驱的前驱……
 func generateLIS(s, dp []int) []int {
-	k, index, length := 0, 0, 0
+	index, length := 0, 0
 	for i := 0; i < len(s); i++ {
 		if dp[i] > length {
 			length = dp[i]
@@ -78,19 +76,20 @@ func generateLIS(s, dp []int) []int {
 	}
 
 	subArr := make([]int, length)
-	subArr[k+1] = s[index]
+	subArr[length-1] = s[index]
 
 	for j := index - 1; j >= 0; j-- {
 		if (dp[index] == dp[j]+1) && (s[index] > s[j]) {
-			//从后向前,将属于递增子序列的元素加入到subArr中。
-			subArr[k+1] = s[j]
+			subArr[length-2] = s[j]
 			index = j
+			length--
 		}
 	}
 
-	reverse(subArr[:])
 	return subArr
 }
+
+// LongestIncreasingSubSequenceDetail O(N2)时间复杂度
 func LongestIncreasingSubSequenceDetail(s []int) []int {
 	dp := make([]int, len(s))
 	dp[0] = 1
@@ -101,16 +100,11 @@ func LongestIncreasingSubSequenceDetail(s []int) []int {
 				//求dp[i]时遍历，dp[0...i-1],找出arr[j]<arr[i]小且dp[j]是最大的
 				//dp[i]=dp[j]+1;
 				dp[i] = themax(dp[i], dp[j]+1)
-				fmt.Printf("%v\n", dp)
 			}
 		}
 	}
 
-	for i := 1; i < len(s); i++ {
-		generateLIS(s, dp)
-	}
-
-	return s
+	return generateLIS(s, dp)
 }
 
 func themax(x, y int) int {
@@ -118,10 +112,4 @@ func themax(x, y int) int {
 		return x
 	}
 	return y
-}
-
-func reverse(s []int) {
-	for i, j := 0, len(s)-1; i < j; i, j = i+1, j-1 {
-		s[i], s[j] = s[j], s[i]
-	}
 }
