@@ -5,12 +5,14 @@ const vexCounts = 6   //顶点数量
 type VertexData uint8 //顶点数据
 type UINT uint
 
+var vextex = []string{"A", "B", "C", "D", "E", "F"}
+
 func MinSpanTree() {
 	var adjMat [vexCounts][vexCounts]UINT
 	AdjMatrix(adjMat) //邻接矩阵
 }
 
-func AdjMatrix(adjMat [6][6]UINT) { //邻接矩阵表示法
+func AdjMatrix(adjMat [vexCounts][vexCounts]UINT) [vexCounts][vexCounts]UINT { //邻接矩阵表示法
 	for i := 0; i < vexCounts; i++ { //初始化邻接矩阵
 		for j := 0; j < vexCounts; j++ {
 			adjMat[i][j] = INFINITE
@@ -36,4 +38,5 @@ func AdjMatrix(adjMat [6][6]UINT) { //邻接矩阵表示法
 	adjMat[5][2] = 4
 	adjMat[5][3] = 2
 	adjMat[5][4] = 6
+	return adjMat
 }
