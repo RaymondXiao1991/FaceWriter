@@ -89,8 +89,8 @@ func equal(x, y reflect.Value, seen map[comparison]bool) bool {
 			if !equal(x.MapIndex(k), y.MapIndex(k), seen) {
 				return false
 			}
-			return true
 		}
+		return true
 	}
 	panic("unreachable")
 }

@@ -59,6 +59,17 @@ func TestUnsafePointer(t *testing.T) {
 	*pb = 42
 	t.Log(x.a)
 	t.Log(x.b)
+
+	t.Log(reflect.ValueOf(map[string][]int{}).Kind())
+	t.Log(reflect.ValueOf(map[string][]int(nil)).Kind())
+
+	mi1, mi2 := map[string][]int{}, map[string][]int(nil)
+	vx, vy := reflect.ValueOf(mi1), reflect.ValueOf(mi2)
+	//kx, ky := reflect.ValueOf(mi1).Kind(), reflect.ValueOf(mi2).Kind()
+	t.Log(vx.Len())
+	t.Log(vy.Len())
+	t.Logf("vx.MapKeys():%v", vx.MapKeys())
+	t.Logf("vy.MapKeys():%v", vy.MapKeys())
 }
 
 func TestSplit(t *testing.T) {
@@ -130,7 +141,7 @@ func TestEqual(t *testing.T) {
 		// maps
 		{map[string][]int{"foo": {1, 2, 3}}, map[string][]int{"foo": {1, 2, 3}}, true},
 		{map[string][]int{"foo": {1, 2, 3}}, map[string][]int{"foo": {1, 2, 3, 4}}, false},
-		//{map[string][]int{}, map[string][]int(nil), true},    // 切片的index为0时panic
+		{map[string][]int{}, map[string][]int(nil), true}, // 切片的index为0时panic
 		// pointers
 		{&one, &one, true},
 		{&one, &two, false},
