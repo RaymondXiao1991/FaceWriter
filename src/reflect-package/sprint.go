@@ -37,14 +37,18 @@ func formatAtom(v reflect.Value) string {
 		return "invalid"
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		return strconv.FormatInt(v.Int(), 10)
-	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
+	case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uintptr:
 		return strconv.FormatUint(v.Uint(), 10)
 	case reflect.Float32:
 		return strconv.FormatFloat(v.Float(), 'f', -1, 32)
 	case reflect.Float64:
 		return strconv.FormatFloat(v.Float(), 'f', -1, 64)
 	case reflect.Bool:
-		return strconv.FormatBool(v.Bool())
+		if v.Bool() {
+			return "true"
+		} else {
+			return "false"
+		}
 	case reflect.String:
 		return strconv.Quote(v.String())
 	case reflect.Chan, reflect.Func, reflect.Ptr, reflect.Slice, reflect.Map:
