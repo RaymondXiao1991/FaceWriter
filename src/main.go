@@ -1,5 +1,11 @@
 package main
 
+import (
+	"net/http"
+	"reflect-package"
+	"log"
+)
+
 func main() {
 	// http://localhost:8000/plot?expr=sin(-x)*pow(1.5,-r)
 	// http://localhost:8000/plot?expr=pow(2,sin(y))*pow(2,sin(x))/16
@@ -54,4 +60,7 @@ func main() {
 	channel.Printer(squares)*/
 
 	//http.ListenAndServe("localhost:8002", nil)
+
+	http.HandleFunc("/search", reflect_package.Search)
+	log.Fatal(http.ListenAndServe(":23451", nil))
 }
