@@ -1,6 +1,10 @@
 package test
 
-import "testing"
+import (
+	"testing"
+	"time"
+	"math/rand"
+)
 
 func TestPalindrome(t *testing.T) {
 	if !IsPalindrome("detartrated") {
@@ -53,5 +57,27 @@ func TestIsPalindrome(t *testing.T) {
 		if got := IsPalindrome(test.input); got != test.want {
 			t.Errorf("IsPalindrome(%q) = %v", test.input, got)
 		}
+	}
+}
+
+// 随机测试 IsPalindrome
+func TestRandomPalindrome(t *testing.T) {
+	seed := time.Now().UTC().UnixNano()
+	t.Logf("Random seed: %d", seed)
+	rng := rand.New(rand.NewSource(seed))
+
+	for i := 0; i < 1000; i++ {
+		p := RandomPalindrome(rng)
+		t.Logf("Random palindrome: %s", p)
+		if !IsPalindrome(p) {
+			t.Errorf("IsPalindrome(%q) = false", p)
+		}
+	}
+}
+
+// 基准测试 IsPalindrome
+func BenchmarkIsPalindrome(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		IsPalindrome("A man, a plan, a canal: Panama")
 	}
 }
