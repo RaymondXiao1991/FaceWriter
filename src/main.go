@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"reflect-package"
 	"log"
+	"select-multiplex"
 )
 
 func main() {
@@ -60,7 +61,7 @@ func main() {
 	channel.Printer(squares)*/
 
 	//http.ListenAndServe("localhost:8002", nil)
-
+	select_multiplex.SelectMultiplexWithAbort()
 	http.HandleFunc("/search", reflect_package.Search)
 	log.Fatal(http.ListenAndServe(":23451", nil))
 }

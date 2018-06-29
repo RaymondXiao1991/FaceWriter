@@ -4,6 +4,7 @@ import (
 	"testing"
 	"reflect"
 	"os"
+	"strings"
 )
 
 func TestReflectValue(t *testing.T) {
@@ -30,4 +31,33 @@ func TestReflectValue(t *testing.T) {
 	stdout := reflect.ValueOf(os.Stdout).Elem()
 	fd := stdout.FieldByName("fd")
 	t.Log(fd.CanAddr(), fd.CanSet())
+
+	type Ab struct {
+		a string
+		b int64
+	}
+	var ab Ab
+	xx := reflect.ValueOf(&ab).Elem()
+	t.Log(xx)
+}
+
+func TestField(t *testing.T) {
+	var ab struct {
+		a string `http:"a"`
+		b int    `http:"b"`
+	}
+	ab.b = 10
+
+	fields := make(map[string]reflect.Value)
+	v := reflect.ValueOf(&ab).Elem()
+	for i := 0; i < v.NumField(); i++ {
+		fieldInfo := v.Type().Field(i)
+		tag := fieldInfo.Tag
+		name := tag.Get("http")
+		if name == "" {
+			name = strings.ToLower(fieldInfo.Name)
+		}
+		fields[name] = v.Field(i)
+	}
+	t.Log(fields)
 }
