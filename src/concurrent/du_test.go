@@ -2,8 +2,6 @@ package concurrent
 
 import (
 	"testing"
-	"reflect"
-	"strings"
 )
 
 func TestDu(t *testing.T) {
@@ -17,5 +15,3 @@ func TestDu2(t *testing.T) {
 func TestDu3(t *testing.T) {
 	Du3()
 }
-
-

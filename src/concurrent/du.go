@@ -70,7 +70,7 @@ LOOP:
 }
 
 var verbose = flag.Bool("v", false, "show verbose progress messages")
-var vFlag = flag.Bool("v", false, "show verbose progress messages")
+//var vFlag = flag.Bool("v", false, "show verbose progress messages")
 
 func Du3() {
 	flag.Parse()
@@ -91,7 +91,7 @@ func Du3() {
 	}()
 
 	var tick <-chan time.Time
-	if *vFlag {
+	if *verbose {
 		tick = time.Tick(500 * time.Millisecond)
 	}
 	var nfiles, nbytes int64
